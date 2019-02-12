@@ -11,6 +11,7 @@ namespace wodrow\yii2wwwangeditor\widgets;
 
 use wodrow\yii2wwwangeditor\assets\WangeditorAsset;
 use wodrow\yii2wwwangeditor\assets\WangEditorFullScreenAsset;
+use wodrow\yii2wwwangeditor\assets\WebUploaderAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\InputWidget;
@@ -40,10 +41,14 @@ class WangEditorWidget extends InputWidget
 
     public $customImagesUploadServer;
 
+    public $webuploader_baseUrl;
+
     /**
      * @var string
      */
     private $_editorId;
+
+    public $name;
 
     public function init()
     {
@@ -64,6 +69,10 @@ class WangEditorWidget extends InputWidget
         }
         echo Html::tag('div', $content, ['id' => $this->_editorId]);
         $this->registerJs();
+        return $this->render('webuploader', [
+            'name' => $this->name,
+            'webuploader_baseUrl' => $this->webuploader_baseUrl,
+        ]);
     }
 
     public function registerJs()
@@ -73,15 +82,17 @@ class WangEditorWidget extends InputWidget
         if ($this->canFullScreen) {
             WangEditorFullScreenAsset::register($view);
         }
+        $asset = WebUploaderAsset::register($view);
+        $this->webuploader_baseUrl = $asset->baseUrl;
 
         $id = $this->_editorId;
-        $name = 'editor' . $this->id;
+        $name = $this->name = 'editor' . $this->id;
         $hiddenInputId = $this->options['id'];
         $imagesUploadServer = Url::to(['/wangeditor/upload/images-upload'], true);
         if ($this->customImagesUploadServer){
             $imagesUploadServer = $this->customImagesUploadServer;
         }
-        $this->clientJs = "{name}.customConfig.uploadImgServer = '{$imagesUploadServer}';";
+        $this->clientJs = "{name}.customConfig.uploadImgServer = '{$imagesUploadServer}';{name}.customConfig.zIndex = 100;";
         $clientJs = strtr($this->clientJs, [
             '{name}' => $name,
             '{hiddenInputId}' => $hiddenInputId
@@ -101,9 +112,7 @@ WangEditor.fullscreen.init('#{$id}');
 JS;
         }
         $js .= <<<JS
-$({$name}.toolbarSelector).find('.w-e-toolbar').append('<div class="w-e-menu"><a class="" href="###" onclick="">导入文本</a></div>');
-$({$name}.toolbarSelector).find('.w-e-toolbar').append('<div class="w-e-menu"><a class="" href="###" onclick="">上传视频</a></div>');
-$({$name}.toolbarSelector).find('.w-e-toolbar').append('<div class="w-e-menu"><a class="" href="###" onclick="">上传附件</a></div>');
+$({$name}.toolbarSelector).find('.w-e-toolbar').append('<div class="w-e-menu"><a data-toggle="modal" data-target="#modal-{$name}">上传附件</a></div>');
 JS;
 
         $view->registerJs($js);

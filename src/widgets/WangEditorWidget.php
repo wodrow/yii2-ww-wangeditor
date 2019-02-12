@@ -12,6 +12,7 @@ namespace wodrow\yii2wwwangeditor\widgets;
 use wodrow\yii2wwwangeditor\assets\WangeditorAsset;
 use wodrow\yii2wwwangeditor\assets\WangEditorFullScreenAsset;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\InputWidget;
 
 class WangEditorWidget extends InputWidget
@@ -36,6 +37,8 @@ class WangEditorWidget extends InputWidget
      * @var bool
      */
     public $canFullScreen = true;
+
+    public $customImagesUploadServer;
 
     /**
      * @var string
@@ -74,6 +77,11 @@ class WangEditorWidget extends InputWidget
         $id = $this->_editorId;
         $name = 'editor' . $this->id;
         $hiddenInputId = $this->options['id'];
+        $imagesUploadServer = Url::to(['/wangeditor/upload/images-upload'], true);
+        if ($this->customImagesUploadServer){
+            $imagesUploadServer = $this->customImagesUploadServer;
+        }
+        $this->clientJs = "{name}.customConfig.uploadImgServer = '{$imagesUploadServer}';";
         $clientJs = strtr($this->clientJs, [
             '{name}' => $name,
             '{hiddenInputId}' => $hiddenInputId

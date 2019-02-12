@@ -18,7 +18,7 @@ class WangeditorAsset extends AssetBundle
     public function init()
     {
         $this->css = [
-//            YII_DEBUG?'wangEditor.css':'wangEditor.min.css',
+            YII_DEBUG?'wangEditor.css':'wangEditor.min.css',
         ];
         $this->js = [
             YII_DEBUG?'wangEditor.js':'wangEditor.min.js',

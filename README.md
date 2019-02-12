@@ -1,4 +1,6 @@
 # yii2-ww-wangeditor
+使用版本为3.1.1
+
 [wangEditor 官网](http://www.wangeditor.com/)
 
 安装

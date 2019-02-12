@@ -9,6 +9,8 @@
 namespace wodrow\yii2wwwangeditor\widgets;
 
 
+use wodrow\yii2wwwangeditor\assets\WangeditorAsset;
+use wodrow\yii2wwwangeditor\assets\WangEditorFullScreenAsset;
 use yii\helpers\Html;
 use yii\widgets\InputWidget;
 
@@ -44,6 +46,7 @@ class WangEditorWidget extends InputWidget
     {
         parent::init();
         $this->_editorId = 'editor-' . $this->id;
+        \Yii::trace($this->id);
     }
 
     public function run()
@@ -63,7 +66,7 @@ class WangEditorWidget extends InputWidget
     public function registerJs()
     {
         $view = $this->getView();
-        WangEditorAsset::register($view);
+        WangeditorAsset::register($view);
         if ($this->canFullScreen) {
             WangEditorFullScreenAsset::register($view);
         }

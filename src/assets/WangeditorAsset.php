@@ -13,5 +13,17 @@ use yii\web\AssetBundle;
 
 class WangeditorAsset extends AssetBundle
 {
+    public $sourcePath = '@vendor/wodrow/yii2-ww-wangeditor/src/static';
 
+    public function init()
+    {
+        $this->css = [
+            YII_DEBUG?'wangEditor.css':'wangEditor.min.css',
+            'plugins/fullscreen/wangEditor-full-pluginwangEditor.min.css',
+        ];
+        $this->js = [
+            YII_DEBUG?'wangEditor.js':'wangEditor.min.js',
+            'plugins/fullscreen/wangEditor-full-plugin.min.js',
+        ];
+    }
 }

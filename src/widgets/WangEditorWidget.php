@@ -100,6 +100,12 @@ JS;
 WangEditor.fullscreen.init('#{$id}');
 JS;
         }
+        $js .= <<<JS
+$({$name}.toolbarSelector).find('.w-e-toolbar').append('<div class="w-e-menu"><a class="" href="###" onclick="">导入文本</a></div>');
+$({$name}.toolbarSelector).find('.w-e-toolbar').append('<div class="w-e-menu"><a class="" href="###" onclick="">上传视频</a></div>');
+$({$name}.toolbarSelector).find('.w-e-toolbar').append('<div class="w-e-menu"><a class="" href="###" onclick="">上传附件</a></div>');
+JS;
+
         $view->registerJs($js);
     }
 

@@ -24,11 +24,16 @@ php composer.phar require wodrow/yii2-ww-wangeditor "dev-master"
 
 视图
 ```php
-echo \wodrow\yii2wwwangeditor\widgets\WangEditorWidget::widget();
+echo \wodrow\yii2wwwangeditor\widgets\WangEditorWidget::widget([
+    'name' => 'content',
+    'clientJs' => $clientJs
+]);
 ```
 
 配置
 -----
+
+默认已经配置好，可以直接使用，注意权限和上传限制
 
 ## clientJs 客户端 js 扩展
 
@@ -51,19 +56,6 @@ JS
 ```
 
 更多配置见[官网配置](https://www.kancloud.cn/wangfupeng/wangeditor3/332599)
-
-完整例子设置图片上传的路径
------
-
-```php
-$clientJs = <<<JS
-{name}.customConfig.uploadImgServer = '/upload/wang';
-JS;
-echo \wodrow\yii2wwwangeditor\widgets\WangEditorWidget::widget([
-    'name' => 'content',
-    'clientJs' => $clientJs
-]);
-```
 
 预览效果
 ------

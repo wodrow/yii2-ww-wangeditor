@@ -41,8 +41,6 @@ class WangEditorWidget extends InputWidget
 
     public $customImagesUploadServer;
 
-    public $webuploader_baseUrl;
-
     /**
      * @var string
      */
@@ -71,7 +69,6 @@ class WangEditorWidget extends InputWidget
         $this->registerJs();
         return $this->render('webuploader', [
             'name' => $this->name,
-            'webuploader_baseUrl' => $this->webuploader_baseUrl,
         ]);
     }
 
@@ -82,8 +79,6 @@ class WangEditorWidget extends InputWidget
         if ($this->canFullScreen) {
             WangEditorFullScreenAsset::register($view);
         }
-        $asset = WebUploaderAsset::register($view);
-        $this->webuploader_baseUrl = $asset->baseUrl;
 
         $id = $this->_editorId;
         $name = $this->name = 'editor' . $this->id;

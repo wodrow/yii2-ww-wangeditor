@@ -74,6 +74,7 @@ use yii\widgets\ActiveForm;
                             if(data.files.length == index + 1){
                                 $('#modal-{$name}').modal('hide')
                             }
+                            {$name}.change();
                         }",
                     ],
                 ]);

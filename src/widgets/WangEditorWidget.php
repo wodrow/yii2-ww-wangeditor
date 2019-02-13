@@ -67,7 +67,7 @@ class WangEditorWidget extends InputWidget
         }
         echo Html::tag('div', $content, ['id' => $this->_editorId]);
         $this->registerJs();
-        return $this->render('webuploader', [
+        return $this->render('attachuploader', [
             'name' => $this->name,
         ]);
     }

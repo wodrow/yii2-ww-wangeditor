@@ -24,21 +24,20 @@ class UploadController extends Controller
             $size = $v['size'];
             if ($size > 5 * 1024 * 1024) {
                 echo $size / 1024 / 1024;
+                echo "图片不能超过5M";
                 exit;
             }
         }
         $data = [];
         foreach ($_FILES as $k => $v) {
             $tmp_name = $v['tmp_name'];
-            $tmp_path = \Yii::getAlias('@tmp_root/' . $v['name']);
-            file_put_contents($tmp_path, file_get_contents($tmp_name));
             $name_ext = 'wangeditor/' . date('Y-m-d'). '/images/' . \Yii::$app->security->generateRandomString(10). "_" .$v['name'];
             $upload_path = \Yii::getAlias("@uploads_root/{$name_ext}");
             $upload_url = \Yii::getAlias("@uploads_url/{$name_ext}");
             if (!is_dir(dirname($upload_path))){
                 FileHelper::createDirectory(dirname($upload_path));
             }
-            if (file_put_contents($upload_path, file_get_contents($tmp_path))){
+            if (move_uploaded_file($tmp_name, $upload_path)){
                 $data[] = $upload_url;
             }
         }
@@ -69,9 +68,14 @@ class UploadController extends Controller
         foreach ($filenames as $k => $v){
             $image_ext_name = pathinfo(($file['name'][$k][0]), PATHINFO_EXTENSION);
             $random_string = \Yii::$app->security->generateRandomString(32);
-            $image_name = date("Ymd_His_")."{$random_string}.".$image_ext_name;
-            if (file_put_contents($upload_dir.DIRECTORY_SEPARATOR.$image_name, file_get_contents($file['tmp_name'][$k][0]))){
-                $attachment_url = $upload_url.DIRECTORY_SEPARATOR.$image_name;
+            $image_name = date("Ymd_")."{$random_string}.".$image_ext_name;
+            $_f_path = $upload_dir.DIRECTORY_SEPARATOR.$image_name;
+            $_f_url = $upload_url.DIRECTORY_SEPARATOR.$image_name;
+            if (!is_dir(dirname($_f_path))){
+                FileHelper::createDirectory(dirname($_f_path));
+            }
+            if (move_uploaded_file($file['tmp_name'][$k][0], $_f_path)){
+                $attachment_url = $_f_url;
                 return [
                     'label_name' => $file['name'][$k][0],
                     'url' => $attachment_url,

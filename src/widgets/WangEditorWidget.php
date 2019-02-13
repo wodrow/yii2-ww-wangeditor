@@ -12,6 +12,7 @@ namespace wodrow\yii2wwwangeditor\widgets;
 use wodrow\yii2wwwangeditor\assets\WangeditorAsset;
 use wodrow\yii2wwwangeditor\assets\WangEditorFullScreenAsset;
 use wodrow\yii2wwwangeditor\assets\WebUploaderAsset;
+use wodrow\yii2wwwangeditor\models\FormAttachmentsUpload;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\InputWidget;
@@ -40,6 +41,7 @@ class WangEditorWidget extends InputWidget
     public $canFullScreen = true;
 
     public $customImagesUploadServer;
+    public $customAttachmentsUploadServer;
 
     /**
      * @var string
@@ -67,8 +69,15 @@ class WangEditorWidget extends InputWidget
         }
         echo Html::tag('div', $content, ['id' => $this->_editorId]);
         $this->registerJs();
+        $attachmentsModel = new FormAttachmentsUpload();
+        $attachmentsUploadServer = Url::to(['/wangeditor/upload/attachments-upload'], true);
+        if ($this->customAttachmentsUploadServer){
+            $attachmentsUploadServer = $this->customAttachmentsUploadServer;
+        }
         return $this->render('attachuploader', [
             'name' => $this->name,
+            'attachmentsModel' => $attachmentsModel,
+            'attachmentsUploadServer' => $attachmentsUploadServer,
         ]);
     }
 

@@ -50,4 +50,36 @@ class UploadController extends Controller
         ];
         return $resp;
     }
+
+    public function actionAttachmentsUpload()
+    {
+        \Yii::$app->response->format = 'json';
+        $model_name = \Yii::$app->request->post('model_name');
+        if (empty($_FILES[$model_name])) {
+            return ['error'=>'没有找到上传的文件.'];
+        }
+        $file = $_FILES[$model_name];
+        $filenames = $file['name'];
+//        return ['error'=>'上传失败:'.var_export($file, true)];
+        $upload_dir = \Yii::getAlias("@uploads_root/wangeditor_attachments");
+        $upload_url = \Yii::getAlias("@uploads_url/wangeditor_attachments");
+        if (!is_dir($upload_dir)){
+            FileHelper::createDirectory($upload_dir);
+        }
+        foreach ($filenames as $k => $v){
+            $image_ext_name = pathinfo(($file['name'][$k][0]), PATHINFO_EXTENSION);
+            $random_string = \Yii::$app->security->generateRandomString(32);
+            $image_name = date("Ymd_His_")."{$random_string}.".$image_ext_name;
+            if (file_put_contents($upload_dir.DIRECTORY_SEPARATOR.$image_name, file_get_contents($file['tmp_name'][$k][0]))){
+                $attachment_url = $upload_url.DIRECTORY_SEPARATOR.$image_name;
+                return [
+                    'label_name' => $file['name'][$k][0],
+                    'url' => $attachment_url,
+                ];
+            }else{
+                return ['error'=>"上传失败，请联系站长"];
+                break;
+            }
+        }
+    }
 }

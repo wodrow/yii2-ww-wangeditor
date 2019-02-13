@@ -68,7 +68,7 @@ class UploadController extends Controller
         foreach ($filenames as $k => $v){
             $image_ext_name = pathinfo(($file['name'][$k][0]), PATHINFO_EXTENSION);
             $random_string = \Yii::$app->security->generateRandomString(32);
-            $image_name = date("Ymd_")."{$random_string}.".$image_ext_name;
+            $image_name = date("Ymd_His_")."{$random_string}.".$image_ext_name;
             $_f_path = $upload_dir.DIRECTORY_SEPARATOR.$image_name;
             $_f_url = $upload_url.DIRECTORY_SEPARATOR.$image_name;
             if (!is_dir(dirname($_f_path))){

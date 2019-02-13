@@ -32,10 +32,6 @@ use yii\widgets\ActiveForm;
                         'multiple' => true,
                     ],
                     'pluginOptions' => [
-                        // 需要预览的文件格式
-//                        'previewFileType' => 'image',
-                        // 预览的文件
-//            'initialPreview' => ['图片1', '图片2', '图片3'],
                         // 是否展示预览图
                         'initialPreviewAsData' => true,
                         // 异步上传的接口地址设置
@@ -72,7 +68,7 @@ use yii\widgets\ActiveForm;
                     'pluginEvents' => [
                         // 上传成功后的回调方法，需要的可查看data后再做具体操作，一般不需要设置
                         "fileuploaded" => "function (event, data, id, index) {
-                            {$name}.txt.append('<p><a href=\"' + data.response.url + '\">' + data.response.label_name + '</a></p>');
+                            {$name}.txt.append('<p><a href=\"' + data.response.url + '\" target=\"_blank\">' + data.response.label_name + '</a></p>');
                             if(data.files.length == index + 1){
                                 $('#modal-{$name}').modal('hide')
                             }

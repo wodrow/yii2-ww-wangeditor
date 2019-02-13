@@ -64,3 +64,7 @@ echo \wodrow\yii2wwwangeditor\widgets\WangEditorWidget::widget([
     'clientJs' => $clientJs
 ]);
 ```
+
+预览效果
+------
+![wangeditor](https://i.loli.net/2019/02/13/5c63c5d3ac6dd.png)

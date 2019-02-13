@@ -13,11 +13,18 @@ php composer.phar require wodrow/yii2-ww-wangeditor "dev-master"
 使用
 -----
 
+配置
 ```php
-echo \wodrow\yii2wwwangeditor\widgets\WangEditorWidget::widget([
-    'name' => 'inputName',
-    //'canFullScreen' => true, // 增加全屏的按钮
-]);
+'modules' => [
+    'wangeditor' => [
+        'class' => \wodrow\yii2wwwangeditor\WangEditorModule::className(),
+    ],
+],
+```
+
+视图
+```php
+echo \wodrow\yii2wwwangeditor\widgets\WangEditorWidget::widget();
 ```
 
 配置

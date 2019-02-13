@@ -25,8 +25,10 @@ use yii\widgets\ActiveForm;
                 <h4 class="modal-title" id="myModalLabel">上传附件(不要超过500M)</h4>
             </div>
             <div class="modal-body">
-                <?php $form = ActiveForm::begin(); ?>
-                <?= $form->field($attachmentsModel, 'attachments[]')->widget(FileInput::className(), [
+                <?php
+                echo FileInput::widget([
+                    'model' => $attachmentsModel,
+                    'attribute' => "attachments[]",
                     'options' => [
                         'accept' => '*',
                         'multiple' => true,
@@ -74,8 +76,8 @@ use yii\widgets\ActiveForm;
                             }
                         }",
                     ],
-                ])->label(false) ?>
-                <?php ActiveForm::end(); ?>
+                ]);
+                ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

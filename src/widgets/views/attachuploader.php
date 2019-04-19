@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<div class="modal fade" id="modal-<?=$name ?>" tabindex="-1" role="dialog" aria-labelledby="modal-<?=$name ?>-label" aria-hidden="true">
+<div class="modal fade" id="modal-<?=$name ?>" tabindex="-1" role="dialog" aria-labelledby="modal-<?=$name ?>-label" aria-hidden="true" style="z-index: 10009">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

@@ -14,4 +14,7 @@ use yii\base\Module;
 class WangEditorModule extends Module
 {
     public $controllerNamespace = 'wodrow\yii2wwwangeditor\controllers';
+
+    public $uploads_root = '@webroot';
+    public $uploads_url = '@web';
 }

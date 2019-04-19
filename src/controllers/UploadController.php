@@ -32,8 +32,8 @@ class UploadController extends Controller
         foreach ($_FILES as $k => $v) {
             $tmp_name = $v['tmp_name'];
             $name_ext = 'wangeditor/' . date('Y-m-d'). '/images/' . \Yii::$app->security->generateRandomString(10). "_" .$v['name'];
-            $upload_path = \Yii::getAlias("@uploads_root/{$name_ext}");
-            $upload_url = \Yii::getAlias("@uploads_url/{$name_ext}");
+            $upload_path = \Yii::getAlias("{$this->module->uploads_root}/{$name_ext}");
+            $upload_url = \Yii::getAlias("{$this->module->uploads_url}/{$name_ext}");
             if (!is_dir(dirname($upload_path))){
                 FileHelper::createDirectory(dirname($upload_path));
             }
@@ -60,8 +60,8 @@ class UploadController extends Controller
         $file = $_FILES[$model_name];
         $filenames = $file['name'];
 //        return ['error'=>'上传失败:'.var_export($file, true)];
-        $upload_dir = \Yii::getAlias("@uploads_root/wangeditor_attachments");
-        $upload_url = \Yii::getAlias("@uploads_url/wangeditor_attachments");
+        $upload_dir = \Yii::getAlias("{$this->module->uploads_root}/wangeditor_attachments");
+        $upload_url = \Yii::getAlias("{$this->module->uploads_url}/wangeditor_attachments");
         if (!is_dir($upload_dir)){
             FileHelper::createDirectory($upload_dir);
         }

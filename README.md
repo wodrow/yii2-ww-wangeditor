@@ -18,6 +18,8 @@ php composer.phar require wodrow/yii2-ww-wangeditor "dev-master"
 'modules' => [
     'wangeditor' => [
         'class' => \wodrow\yii2wwwangeditor\WangEditorModule::className(),
+        'uploads_root' => "@webroot", // 默认
+        'uploads_url' => "@web", // 默认
     ],
 ],
 ```
